@@ -22,13 +22,12 @@ class DetectIncrementsShould {
         assertEquals(1, detectIncrement(listOf(1, 3, 1)))
     }
 
-    private fun detectIncrement(emptyList: List<Int>): Int {
-        if (emptyList.isEmpty()) return 0
-        return detectIncrementFromIndex(emptyList, 0)
+    private fun detectIncrement(measures: List<Int>): Int {
+        return detectIncrementFromIndex(measures, 0)
     }
 
     private fun detectIncrementFromIndex(measures: List<Int>, index: Int): Int {
-        if (index == measures.size - 1)
+        if (measures.isEmpty() || index == measures.size - 1)
             return 0
         if (measures[index + 1] > measures[index]) {
             return 1 + detectIncrementFromIndex(measures, index + 1)
