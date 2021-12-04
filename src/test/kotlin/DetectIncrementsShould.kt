@@ -17,10 +17,22 @@ class DetectIncrementsShould {
         assertEquals(0, detectIncrement(listOf(1, 1)))
     }
 
+    @Test
+    fun detect_an_increment_when_a_measure_is_not_bigger_than_the_previous_one_with_more_than_two() {
+        assertEquals(1, detectIncrement(listOf(1, 3, 1)))
+    }
+
     private fun detectIncrement(emptyList: List<Int>): Int {
-        if (emptyList.size > 1)
-            if (emptyList.first() < emptyList.last())
-                return 1
-        return 0
+        if (emptyList.isEmpty()) return 0
+        return detectIncrementFromIndex(emptyList, 0)
+    }
+
+    private fun detectIncrementFromIndex(measures: List<Int>, index: Int): Int {
+        if (index == measures.size - 1)
+            return 0
+        if (measures[index + 1] > measures[index]) {
+            return 1 + detectIncrementFromIndex(measures, index + 1)
+        }
+        return 0 + detectIncrementFromIndex(measures, index + 1)
     }
 }
