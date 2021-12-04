@@ -1,3 +1,5 @@
+package day1SonarSeep
+
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,7 +21,7 @@ class DetectIncrementsShould {
 
     @ParameterizedTest
     @MethodSource("doesNotDetectIncrementParameters")
-    fun not_detect_an_increment_when_a_measure_is_not_bigger_than_the_previous_one(measures: List<Int>) {
+    fun `not detect an increment when a measure is not bigger than the previous one`(measures: List<Int>) {
         assertEquals(0, detectIncrement(measures))
     }
 
@@ -41,20 +43,5 @@ class DetectIncrementsShould {
                 Arguments.of(listOf(1, 1, 1, 1)),
             )
     }
-
-    private fun detectIncrement(measures: List<Int>): Int {
-        return detectIncrementFromIndex(measures, 0)
-    }
-
-    private fun detectIncrementFromIndex(measures: List<Int>, index: Int): Int {
-        val noIncrement = 0
-        if (measures.isEmpty() || index == measures.size - 1)
-            return noIncrement
-        val nextIndex = index + 1
-        if (measures[nextIndex] > measures[index]) {
-            val increment = 1
-            return increment + detectIncrementFromIndex(measures, nextIndex)
-        }
-        return noIncrement + detectIncrementFromIndex(measures, nextIndex)
-    }
 }
+
