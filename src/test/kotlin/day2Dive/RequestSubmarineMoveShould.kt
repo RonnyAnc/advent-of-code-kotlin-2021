@@ -2,7 +2,11 @@ package day2Dive
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import java.nio.file.Path
+import java.util.stream.Stream
 import kotlin.io.path.writeText
 
 class RequestSubmarineMoveShould {
@@ -13,23 +17,38 @@ class RequestSubmarineMoveShould {
         assertEquals(0, result)
     }
 
-    @Test
-    fun `retrieve non 0 when it was moved horizontally and vertically`() {
+    @ParameterizedTest
+    @MethodSource("movements")
+    fun `retrieve non 0 when it was moved horizontally and vertically`(movements: String, expectedOutput: Int) {
         val movementRequestsFile = kotlin.io.path.createTempFile()
-        movementRequestsFile.writeText("""
-            forward 1
-            down 1
-        """.trimIndent())
+        movementRequestsFile.writeText(movements.trimIndent())
         val result = requestSubmarineBatchMovements(movementRequestsFile)
-        assertEquals(1, result)
+        assertEquals(expectedOutput, result)
+    }
+
+    companion object TestMovements {
+        @JvmStatic
+        fun movements(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of("""
+                    forward 1
+                    down 1
+                """.trimIndent(), 1),
+                Arguments.of("""
+                    forward 1
+                    down 2
+                """.trimIndent(), 2),
+            )
+        }
     }
 
     private fun requestSubmarineBatchMovements(movementsFilePath: Path): Int {
-        var movement = 0
+        var horizontal = 0
+        var depth = 0
         movementsFilePath.toFile().forEachLine { when {
-            it.startsWith("forward") -> movement += 1
+            it.startsWith("forward") -> horizontal += it.filter { it.isDigit() }.toInt()
+            it.startsWith("down") -> depth += it.filter { it.isDigit() }.toInt()
         } }
-        if (movement != 0 ) return 1
-        return 0
+        return horizontal * depth
     }
 }
