@@ -1,11 +1,11 @@
 package day2Dive
 
+import day2Dive2.requestSubmarineBatchMovements
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.nio.file.Path
 import java.util.stream.Stream
 import kotlin.io.path.writeText
 
@@ -46,15 +46,5 @@ class RequestSubmarineMoveShould {
             )
         }
     }
-
-    private fun requestSubmarineBatchMovements(movementsFilePath: Path): Int {
-        var horizontal = 0
-        var depth = 0
-        movementsFilePath.toFile().forEachLine { when {
-            it.startsWith("forward") -> horizontal += it.filter { it.isDigit() }.toInt()
-            it.startsWith("down") -> depth += it.filter { it.isDigit() }.toInt()
-            it.startsWith("up") -> depth -= it.filter { it.isDigit() }.toInt()
-        } }
-        return horizontal * depth
-    }
 }
+
