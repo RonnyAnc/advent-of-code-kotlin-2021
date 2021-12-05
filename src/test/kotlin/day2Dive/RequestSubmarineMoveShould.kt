@@ -33,11 +33,16 @@ class RequestSubmarineMoveShould {
                 Arguments.of("""
                     forward 1
                     down 1
-                """.trimIndent(), 1),
+                """.trimIndent(), 1 * 1),
                 Arguments.of("""
                     forward 1
                     down 2
                 """.trimIndent(), 2),
+                Arguments.of("""
+                    forward 1
+                    down 2
+                    up 1
+                """.trimIndent(), 1 * 1)
             )
         }
     }
@@ -48,6 +53,7 @@ class RequestSubmarineMoveShould {
         movementsFilePath.toFile().forEachLine { when {
             it.startsWith("forward") -> horizontal += it.filter { it.isDigit() }.toInt()
             it.startsWith("down") -> depth += it.filter { it.isDigit() }.toInt()
+            it.startsWith("up") -> depth -= it.filter { it.isDigit() }.toInt()
         } }
         return horizontal * depth
     }
