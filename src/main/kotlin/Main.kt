@@ -1,7 +1,9 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import day1SonarSeep.detectIncrement
+import day1SonarSeep.getMeasuresFrom
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main() {
+    println("Reading measures...")
+    val measures = getMeasuresFrom("inputs/input.txt")
+    println("There has been ${detectIncrement(measures)} increments")
 }
+
