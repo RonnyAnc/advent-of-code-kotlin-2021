@@ -3,6 +3,7 @@ package day2Dive2
 class Submarine {
     private var depth = 0
     private var horizontal = 0
+    private var aim = 0
     val multipliedPositions
         get() = horizontal * depth
 
@@ -10,7 +11,7 @@ class Submarine {
         val increment = extractNumberFrom(instruction)
         when {
             instruction.startsWith("forward") ->
-                moveForward(increment)
+                move(increment)
             instruction.startsWith("down") ->
                 increaseDepth(increment)
             instruction.startsWith("up") ->
@@ -18,12 +19,13 @@ class Submarine {
         }
     }
 
-    private fun moveForward(increment: Int) {
+    private fun move(increment: Int) {
         horizontal += increment
+        depth += increment * aim
     }
 
     private fun increaseDepth(increment: Int) {
-        depth += increment
+        aim += increment
     }
 
     private fun decreaseDepth(decrement: Int) {

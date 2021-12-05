@@ -33,16 +33,17 @@ class RequestSubmarineMoveShould {
                 Arguments.of("""
                     forward 1
                     down 1
-                """.trimIndent(), 1 * 1),
+                """.trimIndent(), 0),
                 Arguments.of("""
                     forward 1
                     down 2
-                """.trimIndent(), 2),
+                    forward 2
+                """.trimIndent(), 12),
                 Arguments.of("""
                     forward 1
-                    down 2
-                    up 1
-                """.trimIndent(), 1 * 1)
+                    down 10
+                    forward 1
+                """.trimIndent(), 20)
             )
         }
     }

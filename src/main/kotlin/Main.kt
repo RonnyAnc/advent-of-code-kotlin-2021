@@ -1,9 +1,10 @@
-import day1SonarSeep.detectIncrement
-import day1SonarSeep.getMeasuresFrom
+import day2Dive2.requestSubmarineBatchMovements
+import kotlin.io.path.Path
 
 fun main() {
-    println("Reading measures...")
-    val measures = getMeasuresFrom("inputs/input.txt")
-    println("There has been ${detectIncrement(measures)} increments")
+    val movementsFilePath = Path("inputs/day2-input.txt")
+    println("Processing input file $movementsFilePath...")
+    val result = requestSubmarineBatchMovements(movementsFilePath)
+    println("The result of multiplying horizonal * depth is $result")
 }
 
